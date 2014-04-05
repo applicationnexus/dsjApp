@@ -1,0 +1,65 @@
+<ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+<div data-ng-controller="DiningDataIndex">
+    <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon hide"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+    </div>
+
+    <div class="bar bar-header makeselection hide" id="selectbar" ng-click="showfilter('bar');">
+      Make another selection
+    </div>
+
+    <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+    <a class="button button-icon icon ion-navigate hide"></a>
+    <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble">chat</a>
+    </div>
+
+  <ion-content has-header="false" has-footer="true" has-tabs="false" id="shopping">
+  <div id="selectopts" data-ng-class='{"rollup": currentparams != ""}'>
+    <h1 class="main">{{"places.dining_title" | t}}</h1>
+
+    <form name="dining">
+      <select name="placetype" data-ng-model="param_type" ng-options="item.slug as item.name.replace('amp;', '') for item in placetypes">
+        <option value="">{{"places.all_types" | t}}</option>
+      </select>
+
+      <select name="area" data-ng-model="param_area" ng-options="item.slug as item.name for item in areas">
+        <option value="">{{"places.all_areas" | t}}</option>
+      </select>
+
+      <p id="sort">{{"places.sort_by" | t}}: 
+        <input id="sortbyp" type="radio" name="sorting" value="p" style="display:none;" data-ng-click="" data-ng-model="param_sort">
+        <label for="sortbyp" data-ng-class='{"selected":param_sort == "p"}' style="font-size:18px;">{{"places.popularity" | t}}</label> |
+        
+        <input id="sortbya" type="radio" name="sorting" value="a" style="display:none;" data-ng-click="" data-ng-model="param_sort">
+        <label for="sortbya" data-ng-class='{"selected":param_sort == "a"}' style="font-size:18px;">{{"places.alphabetical" | t}}</label>
+      </p>
+
+      <!--<button class="gobutton" data-ng-click="filterResults(param_type, param_area, param_sort); showfilter('res');">{{"go" | t}}</button>-->
+    </form>
+  </div>
+
+  <div>
+    <ion-list class="list">
+      <ion-item data-ng-repeat="place in places | filter:param_type | filter:param_area | orderBy:param_sort" href="#/dining/{{place.ID}}">
+        <div class="mylist">        
+          <div class="thumbnail">
+            <div data-ng-if="place.featured_thumb" style="background: #fff url('{{place.featured_thumb}}') center center no-repeat; width:100%; height: 100%;">
+            </div>
+          </div>
+          <h2>{{place.post_title}}</h2>
+          <div class="clear"></div>
+        </div>
+      </ion-item>
+    </ion-list>
+    
+    <div id="zeroresults" class="{{LoadingBar}}">
+      <div class="margin" style="text-align:center;" data-ng-class="{'hide': places.length > '0' }">{{"zero_results" | t}}</div>
+    </div>
+    
+  </div>
+  <div class="bottom_nav_spacer"></div>
+  </ion-content>
+</div>
+</ion-view>

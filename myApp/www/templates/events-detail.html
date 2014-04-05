@@ -1,0 +1,70 @@
+<ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+
+    <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon" onclick="window.history.back();"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+    </div>
+
+    <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+    <a class="button button-icon icon ion-navigate hide"></a>
+    <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble">chat</a>
+    </div>
+
+  <ion-content has-header="false" has-tabs="true" padding="false" id="events">
+    
+    <div data-ng-controller="EventsDataDetail">
+
+    <h1 class="margin">{{place.post_title}}</h1>
+      
+    <ul class="margin options" data-ng-if="place.types">
+        <li ng-repeat="type in place.types" data-ng-bind-html="type.name">
+        </li>
+    </ul>
+
+    <div class="margin event_dates">
+    <span data-ng-if="place.event_start_date">{{place.event_start_date | date2}}</span><span data-ng-if="place.event_start_time">, {{place.event_start_time | hoursfilter2}}</span>
+
+    <span data-ng-if="place.event_end_date != place.event_start_date"> - {{place.event_end_date | date2}}</span>
+
+    <span data-ng-if="place.event_end_time != place.event_start_time">
+      <span data-ng-if="place.event_end_time">
+        <span data-ng-if="place.event_end_date == place.event_start_date"> - </span>
+        {{place.event_end_time | hoursfilter2}}
+      </span>
+    </span>
+
+    </div>
+
+    <!-- <div class="margin ical_link">
+      <a href="http://discoversaintjohn.com/cms/wp-content/themes/saintjohn/ical.php?event={{place.ID}}">+ {{"places.events_calendar" | t}}</a>
+    </div> -->
+
+    <p class="margin content" data-ng-if="place.post_content" data-ng-bind-html="place.post_content"></p>
+	<div class="addFavouriteBtn" data-ng-if="favourite=='NO'" ng-click="addFav({{place.ID}});">
+    	+ Add To Favourites
+    </div>
+	<div class="removeFavouriteBtn" data-ng-if="favourite=='YES'" ng-click="removeFav({{place.ID}});">
+    - Remove Rrom Favourites
+    </div>
+    <div class="mapinlay" id="map_canvas"></div>
+    
+    <div class="margin margin-bottom">
+    <div class="mapbutton getdirections" style="width:100%;" data-ng-class="{'mapbuttonfr': language == 'fr'}"><a href="http://maps.google.com/maps?daddr={{place.event_street}}+{{ place.event_street2 }}+{{place.event_city}}+{{place.event_province}}+{{place.event_postal_code}}" target="_blank">{{"places.get_directions" | t}}</a></div>
+    </div>
+
+    <div class="margin">
+      <span data-ng-if="place.event_street">{{place.event_street}}<br/></span>
+      <span data-ng-if="place.event_street2">{{ place.event_street2 }}<br/></span>
+      <span data-ng-if="place.event_city">{{place.event_city}},</span> <span data-ng-if="place.event_province">{{place.event_province}}</span> <span data-ng-if="place.event_postal_code">{{place.event_postal_code}}</span>
+    </div>
+
+    <div class="margin" data-ng-if="place.event_phone">{{"places.tel" | t}}: {{place.event_phone}}</div>
+    
+    <div class="margin" data-ng-if="place.event_toll_free_phone">{{"places.toll_free" | t}}: {{place.event_toll_free_phone}}</div>
+    
+    <div class="margin" data-ng-if="place.event_email">{{"places.email" | t}}: {{place.event_email}}</div>
+
+    <div class="bottom_nav_spacer"></div>
+  </ion-content>
+</ion-view>

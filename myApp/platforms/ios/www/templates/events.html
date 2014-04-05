@@ -1,0 +1,104 @@
+<ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+<div data-ng-controller="EventsDataIndex">
+    <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon hide"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+    </div>
+
+    <div class="bar bar-header makeselection hide" id="selectbar" ng-click="showfilter('bar');">
+      Make another selection
+    </div>
+
+    <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+    <a class="button button-icon icon ion-navigate hide"></a>
+    <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble" style="background: #cc092f; color: #FFF; text-transform:uppercase;">chat</a>
+    </div>
+
+  <ion-content has-header="false" has-footer="true" has-tabs="false" id="events">
+  <div id="selectopts" data-ng-class='{"rollup": currentparams != ""}'>
+    <h1 class="main">{{"places.events_title" | t}}</h1>
+
+    <form name="events">
+      <select name="placetype" data-ng-model="param_type" ng-options="item.slug as item.name.replace('amp;', '') for item in placetypes">
+        <option value="">{{"places.all_types" | t}}</option>
+      </select>
+
+      <select name="area" data-ng-model="param_area" ng-options="item.slug as item.name for item in areas">
+        <option value="">{{"places.all_areas" | t}}</option>
+      </select>
+
+      <div class="margin" style="text-align:center;" class="daterangehide" data-ng-class='{"daterange": param_daterange == "all"}'>
+        <div id="jrs_calendar_form">
+          <div id="jrs_arrival_input">
+            <div class="jrs_form_text" style="width: 20%;">{{"places.events_from" | t}}:</div>
+            <div class="jrdp_calendar_pos" id="start-jrdatepicker"></div>
+            <input type="date" name="start-date-picker" id="start-date" class="date-pick" placeholder="{{processed_start_date}}" data-ng-model="start_date" ng-change="datechange()"/>
+            <input type="hidden" name="start-date" value="{{processed_start_date}}" data-ng-model="param_start_date">
+            <!--// this needs to be localized //-->
+            <img class="ui-datepicker-trigger" src="http://s3.amazonaws.com/bookdirect_template_assets/widget_538/assets/cal.png" ng-click="open($event)"/>
+          </div>
+        </div>
+
+        <div id="jrs_calendar_form">
+          <div id="jrs_arrival_input">
+            <div class="jrs_form_text" style="width: 20%;">{{"places.events_to" | t}}:</div>
+            <div class="jrdp_calendar_pos" id="end-jrdatepicker"></div>
+            <input type="date" name="end-date-picker" id="end-date" class="date-pick" placeholder="{{processed_end_date}}" data-ng-model="end_date" ng-change="datechange()"/>
+            <input type="hidden" name="end-date" value="{{processed_end_date}}"  data-ng-model="param_end_date">
+            <img class="ui-datepicker-trigger" src="http://s3.amazonaws.com/bookdirect_template_assets/widget_538/assets/cal.png" ng-click="open($event)"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="margin" id="date_range_box" style="text-align:center;">
+        <input type="radio" name="date_range" value="all" id="date_all" data-ng-model="param_daterange">
+        <label for="date_all" class="first" style="text-transform: uppercase;">{{"places.events_all" | t}}</label>
+        <div data-ng-if="language == 'fr'"></div>
+        <input type="radio" name="date_range" value="range" id="date_range" data-ng-model="param_daterange">
+        <label for="date_range" style="text-transform: uppercase;">{{"places.events_range" | t}}</label>
+      </div>
+
+      <!--<button class="gobutton" data-ng-click="filterResults(param_type, param_area, param_daterange, processed_start_date, processed_end_date); showfilter('res');">{{"go" | t}}</button>-->
+    </form>
+  </div>
+
+  <div>
+    <div class="list">
+      <!-- <ion-item data-ng-repeat="place in places" href="#/events/{{place.ID}}"> -->
+      <div data-ng-repeat="place in places track by $index | filter:param_type | filter:param_area | orderBy:param_sort" style="border-top:1px dashed #ccc; padding: 10px 0px;">
+        <div class="mylist" data-ng-class='{"featured":place.event_featured==1 && $index < 3}'>
+          <!-- data-ng-click="generateiCal('{{place.event_start_date}}', '{{place.event_start_time}}', '{{place.event_end_date}}', '{{place.event_end_time}}', '{{place.slug}}')" -->
+          
+ <div class="event_date ical_icon" style="cursor: pointer;">
+            <a href="http://discoversaintjohn.com/cms/wp-content/themes/saintjohn/ical.php?event={{place.ID}}" style="display: block; width:100%; height:100%; text-decoration: none; color: #cc092f;">
+              <span data-ng-if="place.event_start_date">{{ place.event_start_date | date1 }}</span>
+              <span data-ng-if="place.event_end_date != place.event_start_date"> - {{ place.event_end_date | date1 }}</span>
+            </a>
+          </div>
+          <div class="event_date">
+              <span data-ng-if="place.event_start_date">{{ place.event_start_date | date1 }}</span>
+              <span data-ng-if="place.event_end_date != place.event_start_date"> - {{ place.event_end_date | date1 }}</span>
+            </a>
+          </div>
+
+          <a href="#/events/{{place.ID}}" style="text-decoration:none; clear:both;">
+          <h2 style="overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">{{place.post_title}}</h2>
+          <p>{{"location" | t}}: {{place.event_street}}, {{place.event_city}}, {{place.event_province}}</p>
+          </a>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <!-- </ion-item> -->
+    </div>
+    
+    <div id="zeroresults" class="{{LoadingBar}}">
+      <div class="margin" style="text-align:center;" data-ng-class="{'hide': places.length > '0' }">{{"zero_results" | t}}</div>
+    </div>
+    
+  </div>
+
+  <div class="bottom_nav_spacer"></div>
+  </ion-content>
+</div>
+</ion-view>

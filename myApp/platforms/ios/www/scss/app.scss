@@ -1,0 +1,1878 @@
+
+@import "_dsj_variables.scss";
+@import "ionic/ionic"; 
+@import "bootstrap/bootstrap";
+/*
+  Please see _variables.scss for additional edits
+  
+  #sass --watch scss/app.scss:css/app.css --style compressed
+    or for grunt tasks (including sass and js minification)
+  #grunt
+*/
+
+/* 
+  Bootstrap/Angular hack for empty href attribute styling 
+  Currently only using the collapse and position directives in bootstrap while including the entire CSS lib (consider trimming out only the necessary css)
+*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+/*------------------+
+| FONT DECLERATIONS |
++------------------*/
+
+@font-face {
+    font-family: 'karmillabold';
+    src: url('../lib/fonts/karmilla-bold-009-webfont.eot');
+    src: url('../lib/fonts/karmilla-bold-009-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/fonts/karmilla-bold-009-webfont.woff') format('woff'),
+         url('../lib/fonts/karmilla-bold-009-webfont.ttf') format('truetype'),
+         url('../lib/fonts/karmilla-bold-009-webfont.svg#karmillabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'karmillaregular';
+    src: url('../lib/fonts/karmilla-regular-009-webfont.eot');
+    src: url('../lib/fonts/karmilla-regular-009-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/fonts/karmilla-regular-009-webfont.woff') format('woff'),
+         url('../lib/lib/fonts/karmilla-regular-009-webfont.ttf') format('truetype'),
+         url('../lib/fonts/karmilla-regular-009-webfont.svg#karmillaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HomemadeAppleRegular';
+    src: url('../lib/fonts/homemadeapple-webfont.eot');
+    src: url('../lib/fonts/homemadeapple-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/fonts/homemadeapple-webfont.woff') format('woff'),
+         url('../lib/fonts/homemadeapple-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+body {
+  color:#4d4d4f; 
+  font: 14px/18px 'karmillaregular', Arial, sans-serif;
+  }
+*/
+
+/*-----------------------+
+| Restyled Core elements |
++-----------------------*/// these are defined within the framework, extending/overriding here
+
+.title{
+  text-transform: capitalize;
+  font-family: serif;
+}
+
+ion-view{ // add padding to the top of the view for ios7 (not to get in the way of status bar)
+  /*margin-top: 50px;*/
+  font-family: karmillaregular;
+  color: $dsjgrey;
+  font-size: $font-reg;
+  margin: 0px auto;
+}
+
+.dsjredbg{ background: $dsjred; color: #fff; }
+
+/*.item, .item h1, .item h2, .item h3, .item h4, .item h5, .item h6, .item p, .item-content, .item-content h1, .item-content h2, .item-content h3, .item-content h4, .item-content h5, .item-content h6, .item-content p{
+  overflow: hidden;
+  text-overflow: wrap;
+  white-space: normal;
+}*/
+
+#shopping, #dining, #thingstodo{
+  .item, .item h1, .item h2, .item h3, .item h4, .item h5, .item h6, .item p, .item-content, .item-content h1, .item-content h2, .item-content h3, .item-content h4, .item-content h5, .item-content h6, .item-content p
+  {
+    overflow: hidden;
+    text-overflow: wrap;
+    white-space: normal;
+    line-height: 1.2em;
+  }
+  .item{
+    border-style: dashed;
+    border-color: #ccc;
+  }
+  .item-complex .item-content{
+    padding: 10px 0px;
+  }
+}
+
+#events{
+  .item p, .item-content p{
+    overflow: hidden;
+    text-overflow: wrap;
+    white-space: normal;
+  }
+  .item-complex .item-content{
+    padding: 10px 0px;
+  }
+  .daterange{
+    visibility: collapse;
+    height: 0px;
+  }
+}
+
+.mylist{
+  display: block;
+  width:100%;
+  height: 100%;
+  padding: 10px 15px 0px 15px;
+}
+/*----------------------------+
+| Application specific styles |
++----------------------------*/// globally shared elements
+.clear{
+    clear:both;
+}
+.hide{
+  visibility: hidden;
+}
+.dsjlogo-lg {
+  display: block;
+  margin: 0px auto;
+  width: 45%;
+  height: 0;
+  padding-bottom: 24%;
+
+  text-decoration: none;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  
+  background: transparent url('../img/logo_main.png') center center no-repeat;
+  background-size: 100%;
+
+  html.svg & {
+    background: transparent url('../img/logo_main.svg') center center no-repeat;
+    background-size: 100%;
+  }
+
+}
+.dsjlogo-tagline{
+    display: block;
+    width: 45%;
+    height: 0;
+    padding-bottom: 5%;
+    margin: 5px auto;
+
+    text-decoration: none;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+
+    background: transparent url('../img/logo_tagline.png') center center no-repeat;
+    background-size: 100%;
+
+    html.svg & {
+      background: transparent url('../img/logo_tagline.svg') center center no-repeat;
+      background-size: 100%;
+    }
+}
+.dsjlogo-tagline_fr{
+    display: block;
+    width: 45%;
+    height: 0;
+    padding-bottom: 5%;
+    margin: 5px auto;
+
+    text-decoration: none;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+
+    background: transparent url('../img/logo_tagline_fr.png') center center no-repeat;
+    background-size: 100%; 
+
+    html.svg & {
+      background: transparent url('../img/logo_tagline_fr.svg') center center no-repeat;
+      background-size: 100%;
+    }
+}
+
+.dsjlogo-sm {
+  display: block;    
+  width: 160px;
+  margin: 0px auto;
+
+  background: transparent url('../img/logo_top.png') center center no-repeat;
+  background-size: 100%;
+
+  html.svg & {
+    background: transparent url('../img/logo_top.svg') center center no-repeat;
+    background-size: 100%;
+  }
+}
+
+.redbg{
+  background: $dsjred;
+}
+
+.makeselection{
+  margin-top: -1px; 
+  padding: 10px;
+  background: $dsjred;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  display: block;
+  cursor: pointer;
+}
+
+/* Shared page elements */
+.mapbutton{
+  color: #fff;
+  padding: 8px 0px;
+  width: 49%;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  cursor: pointer;
+}
+.getdirections{
+  background: $dsjred;
+  a{ 
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+  }
+}
+.explorenearby{
+  background: $dsjblue;
+  float: right;
+  a{ 
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+  }
+}
+.mapbuttonfr{
+  height: 60px;
+}
+
+.mapinlay{ 
+  width: 100%;
+  height: 0;
+  padding-bottom: 150%;
+
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  text-align: center;
+}
+#profile .mapinlay{
+  width: 100%;
+  height: 0;
+  padding-bottom: 70%;
+
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.chat-footer .button:last-child{
+  right: 0px !important; /* get the chat button snugg to the right*/
+  border-radius: 0 !important;
+}
+
+.chat-footer{
+  bottom: 40px; 
+  background: transparent !important; 
+  border: none;
+}
+
+.chatbubble{
+  padding-left: 30px !important;
+
+  background: $dsjred url('../img/icons/chat-icon.png') 6px center no-repeat !important;
+  background-size: 30% !important;
+  color: #FFF !important; 
+  text-transform: uppercase;
+  
+  html.svg &{
+    background: $dsjred url('../img/icons/chat-icon.svg') 6px center no-repeat !important;
+    background-size: 30% !important;
+  }
+  
+}
+
+.rollup { visibility: hidden; height: 35px; }
+
+/*--------------+
+| Splash Screen |
++--------------*/
+.siteselection{
+    text-align:center;
+    text-transform:uppercase;
+    clear:both;
+    ul{
+      margin: 5px auto;
+      width: 100%;
+      text-align: center;
+      li{
+        /*display: inline-block;*/
+        background: $dsjblue;
+        color: #fff;
+        margin: 25px auto;
+        width: 80%;
+        font-size: $font-med;
+        a{
+          display: block;
+          text-decoration: none;
+          text-transform: uppercase;
+          color: #fff;
+          width: 100%;
+          height: 100%;
+          padding: 12px;
+        }
+      }
+    }
+}
+
+.rule{
+  width: 90%;
+  border: none;
+  color: #ccc;
+  background-color: #ccc;
+  height: 1px;
+  overflow: hidden;
+  margin: 40px auto;
+}
+
+/*---------------------+
+| Main Navigation Grid |
++---------------------*/
+.containeraspect{
+  width: 100%;
+  height: auto;
+  max-width: 640px;
+  min-width: 320px;
+  
+  margin: 0px auto;
+  text-align: center;
+}
+.navgrid{
+    list-style: none;
+    text-align: center;
+    clear: both;
+    width: 98%;
+    //max-width: 640px; /* TODO: test how this works in larger resolutions/landscape phone/tablet */
+    margin: 0px auto;
+    li{
+      display: inline-block;
+      background: $dsjblue;
+      width: 29%;
+      height: 0; /* height 0 with a padding-bottom of the width % creates a responsive square box */
+      padding-bottom: 29%;
+      margin: 1.5%;
+      color: #fff;
+      a{
+        display: inline-block;
+        width:100%;
+        height: 0;
+        padding-top: 75%;
+        padding-bottom: 25%;
+        color: #fff;
+
+        /*background: rgba(255, 0, 0, 0.2);*/
+
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: $font-sm;        
+        vertical-align: baseline;
+      }
+    }
+}
+
+@each $icon in todo, dining, shopping, stay, play, events, visiting, map, chat {
+  .navgrid .#{$icon} {
+    background: $dsjblue url('../img/icons/#{$icon}-icon.png') center 35% no-repeat;
+    background-size: 40%;
+
+    html.svg & {
+      background: $dsjblue url('../img/icons/#{$icon}-icon.svg') center 35% no-repeat;
+      background-size: 40%;
+    }
+    
+    @if $icon == dining{ background-size: 35%; }
+
+    @if $icon == shopping{ background-size: 35%; }
+
+    @if $icon == stay{ background-size: 35%; }
+
+    @if $icon == play{
+      background: $dsjred url('../img/icons/#{$icon}-icon.png') center 35% no-repeat;
+      background-size: 50%;
+      
+      html.svg & {
+        background: $dsjred url('../img/icons/#{$icon}-icon.svg') center 35% no-repeat;
+        background-size: 50%;
+      }
+
+      a{ cursor: pointer; }
+    }
+
+    @if $icon == visiting{ background-size: 45%; }
+    @if $icon == map{ background-size: 25% !important; }
+    
+    @if $icon == chat{
+      a{ cursor: pointer; }
+    }
+
+  }
+}
+.ical_icon{
+  background: transparent url('../img/icons/calendar-icon.png') 10% 70% no-repeat;
+  background-size: 50%;
+
+  html.svg & {
+    background: transparent url('../img/icons/calendar-icon.svg') 10% 70% no-repeat;
+    background-size: 50%;
+  }
+}
+
+/* Modal / Popups */
+.modal .chat{
+  background: $dsjred;
+  border: none;
+}
+
+
+/* Navigation Header/Footer */
+.toplink{
+  text-align:right;
+  margin: 0px 10px 0px 0px;
+  padding: 0px;
+  position: absolute;
+  display: block;
+  right:0;
+  a{
+    font-size: $font-sm;
+    display: block;
+    padding: 8px;
+    white-space: nowrap;
+  }
+}
+
+.french_site{
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $dsjred;
+  font-weight:bold;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.navfooter{
+  list-style: none;
+  clear:both;
+  width: 96%;
+  padding: 0px;
+  margin: 0px auto;
+  text-align:center;
+ 
+  li{
+    display: inline-block;
+    text-align:center;
+    margin: 0px 0.5%;
+  }
+  
+  a{ 
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $dsjred; 
+    font-weight:bold;
+    cursor: pointer;
+    font-size: 10px;
+    padding: 8px;
+  }
+}
+
+@each $social in twitter, facebook {
+  .navfooter .#{$social}{
+    text-align: center; 
+    width: 15%;
+    height: 0;
+    padding-top: 2%;
+    padding-bottom: 10%;
+
+    background: transparent url("../img/icons/#{$social}-icon.png") center center no-repeat;
+    opacity: 0.40;
+    filter:alpha(opacity=40); /* IE 8 Hack */
+    background-size: 80%;
+
+    html.svg & {
+      background: transparent url("../img/icons/#{$social}-icon.svg") center center no-repeat;
+      opacity: 0.40;
+      background-size: 80%;
+    }
+    
+    a { 
+      display: block;
+      width: 100%;
+      height: 0;
+      padding-bottom: 70%;
+
+      text-decoration: none;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+
+      color: #999; 
+    }
+  }
+}
+
+.navfooter .full_site{ text-align: left; width: 31%; vertical-align: top; margin-top: 12px; white-space: nowrap; text-overflow:ellipsis; }
+.navfooter .city_news{ text-align: right; width: 31%; vertical-align: top; margin-top: 12px; white-space: nowrap; text-overflow:ellipsis; }
+
+
+
+/*---------------+
+| PAGE: Visiting |
++---------------*/
+.usefullinks-header{
+    text-align:center;
+    text-transform: uppercase;
+    background: #999;
+    color: #fff;
+    padding: 15px;
+    margin: 15px 0px;
+    font-size: $font-reg;
+    cursor: pointer;
+    
+    a{
+      display: block;
+    }
+
+    .button-clear{
+      color: #fff;
+      max-height: 30px;
+      min-height: 30px;
+    }
+}
+.usefullinks{
+  ul{
+  list-style: none;
+    li{
+      display: block;
+      border-bottom: 1px dashed #999;
+      padding: 9px 0px;
+      a{
+        color: $dsjblue;
+        font-size: $font-reg;
+        text-decoration: none;
+        display: block;
+      }
+    }
+    li:first-child{
+      padding-top: 0px;
+    }
+    li:last-child{
+      margin-bottom:20px;
+    }
+  }
+}
+
+.linkhide{
+  font-size: $font-reg;
+  ul{
+    list-style: none;
+    margin-bottom: 15px;
+    li{
+      display: block;
+      border-bottom: 1px solid #ccc;
+      padding: 8px 0px 8px 2px;
+      a{
+        text-decoration: none;
+        cursor: pointer;
+        color: $dsjblue;
+        display: block;
+      }
+    }
+  }
+}
+
+/*----------------------------+
+| PAGE: Accommodations (stay) |
++----------------------------*/
+/*.jrs_form_text{ 
+  text-transform: uppercase;
+  color: $dsjblue;
+  font-weight: 300;
+  font-size: $font-reg;
+  display: inline-block;
+  border: 1px solid;
+}*/
+
+#jrs_calendar_form{
+
+  #widget_booking_form{}
+
+  #jrs_lodging_select_div{
+    text-align: center;
+    margin: 35px auto;
+
+    .jrs_form_text{
+      text-transform: uppercase;
+      color: $dsjblue;
+      display: inline-block;
+      text-align: right;
+      margin-bottom: 25px;
+      width: 20%;
+
+    }
+    #lodgingID{
+      width:  65%;
+      display: inline-block;
+    }
+  }  
+  
+  @each $input in arrival, departure {
+    #jrs_#{$input}_input {
+      margin: 35px auto;
+      text-align: center;
+
+      .jrs_form_text{
+        text-transform: uppercase;
+        color: $dsjblue;
+        display: inline-block;
+        width: 30%;
+        text-align: right;
+      }
+
+      .jrdp_calendar_pos{
+        display: inline-block;
+      }
+      
+      #end-date, #start-date{
+        display: inline-block;
+        width: 35%;
+        background: #fff;
+        border: 1px solid #999;
+        padding: 3px;
+        color: $dsjgrey;
+      }
+      
+      .datepick{
+      }
+
+      .ui-datepicker-trigger{
+        display: inline-block;
+        margin: 0px 0px -3px -25px;
+        padding: 0px;
+      }
+    }
+  }
+
+  #jrs_search_submit{
+    text-align: center;
+  }
+
+}
+
+/* Angular Bootstrap UI datepicker style override */
+.dropdown-menu{
+  margin:0px auto !important;
+  width: 100% !important;
+  text-align: center !important;
+  left: 0 !important;
+  top: 0 !important;
+  table{
+    text-align: center !important;
+    margin: 0px auto !important;
+  }
+}
+
+#accommodations h3{
+  text-align: center;
+  text-transform: uppercase;
+}
+#accommodations .check-in, #accommodations .check-out{
+  text-align: center;
+  margin: 25px 0px;
+
+  span{
+    text-transform: uppercase;
+    color: $dsjblue;
+    font-size: 16px;  
+    margin: 0px;
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+  }
+
+  input{
+    border: 1px solid #ccc;
+    color: #999;
+    font-weight: bold;
+    display: inline-block;
+    width: 40%;
+    margin: 0px auto;
+    padding: 10px;
+    @include border-radius(5px);
+  }
+}
+
+#accommodations .type{
+  text-align: center;
+  margin: 25px 0px;
+
+  span{
+    text-transform: uppercase;
+    color: $dsjblue;
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    width: 20%;
+    text-align: right;
+  }
+
+  select{
+    display: inline-block;
+    width: 60%;
+    display: inline-block;
+    margin: 0px auto;
+    white-space: nowrap;
+  }
+
+}
+
+#accommodations button{
+  background: $dsjpurple !important;
+}
+
+/*-------------------+
+| PAGE: Things To Do |
++-------------------*/
+
+#thingstodo{
+  select{
+    width: 75%;
+    margin: 25px auto;
+    white-space: nowrap;
+  }
+}
+
+/*---------------+
+| PAGE: Shopping |
++---------------*/
+
+#shopping{
+  select{
+    width: 75%;
+    margin: 25px auto;
+    white-space: nowrap;
+  }
+}
+
+/*-------------+
+| PAGE: Events |
++-------------*/
+
+#events{
+  select{
+    width: 75%;
+    margin: 15px auto;
+    white-space: nowrap;
+  }
+  .day{ 
+    width: 15%;
+    display: inline-block;
+  }
+  .month{
+    width: 20%;
+    display: inline-block;
+  }
+  .year{
+    width: 20%;
+    display: inline-block;
+  }
+  .date_text{
+    color: $dsjblue;
+    display: inline-block;
+    width: 20%;
+    text-align: right;
+  }
+  #date_range_box{
+    label{
+      padding-left: 5px;
+      color: $dsjblue;
+      font-size: $font-reg;
+    }
+    .first{
+      margin-right: 30px;
+    }
+  }
+
+  .event_dates{
+    color: $dsjred;
+    font-weight: bold;
+  }
+  .ical_link{
+    margin-bottom: 15px;
+    a{
+      color: #f08d0c;
+      text-decoration: none;
+    }
+  }
+
+  .featured{
+    background: #d9eff6;
+  }
+
+}
+
+/*----------+
+| PAGE: MAP |
++----------*/
+
+#map{
+  select{
+    width: 55%;
+    margin: 25px auto;
+    white-space: nowrap;
+  }
+}
+.infobox-content{ 
+  padding: 20px;
+  width: 90%;
+}
+.infoBox > img {
+    padding: 10px !important;
+}
+
+/*--------------+
+| PAGE: global  |
++--------------*/
+#profile{
+  margin-top: 45px;
+}
+#profile .main{
+  color: $dsjblue;
+  font: $font-lg 'HomemadeAppleRegular';
+  text-align: center;
+  text-transform: capitalize;
+}
+
+#profile h1{
+  color: $dsjblue;
+  font-size: $font-reg + 4;
+  margin-top: 10px;
+}
+
+#profile h2{
+  font-size: $font-med;
+  color: $dsjred;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+#profile h3{
+  font-size: $font-med;
+  color: $dsjblue;
+  /*text-transform: uppercase;*/
+  /*text-align: center;*/
+  /*font-weight: bold;*/
+  /*margin-bottom: 35px;*/
+}
+
+#profile p{
+  color: $dsjgrey;
+  font-size: $font-reg;
+  line-height: 22px;
+}
+
+#profile #sort{
+  text-align: center;
+  .selected{
+    color: $dsjred;
+    font-weight: bold;
+  }
+  a{
+    text-decoration: none;
+    color: $dsjgrey;
+  }
+}
+#events .list{
+  h2{
+    font-size: $font-reg;
+    margin: 0px 0px 3px 90px !important;
+    line-height: 1.25em !important;
+  }
+  p{
+    margin: 0 0 0 90px;
+    font-size: $font-reg;
+  }
+}
+
+#events .event_date{
+   color: $dsjred;
+   font-weight: bold;
+   font-size: $font-reg;
+   display: block; 
+   float:left; 
+   width: 85px; 
+   height: 85px;
+   overflow: hidden; 
+   text-overflow: wrap; 
+   white-space: normal;
+}
+
+#profile .list{
+  h2{ 
+    color: $dsjblue;
+    margin: 0px 0px 0px 90px;
+    padding: 0px;
+  }
+ 
+  .thumbnail{
+    width:80px;
+    height:80px;
+    display: inline-block;
+    float: left;
+    margin: 0px 15px 0px 0px;
+    overflow: hidden;
+
+    background: #eee url('../img/explorer.png') center center no-repeat;
+    background-size: 80%;
+    html.svg & {
+      background: #eee url('../img/explorer.svg') center center no-repeat;
+      background-size: 80%;
+    }
+  }
+}
+.scroll{ min-height: 100%; }
+#profile .scrollto{
+  background: $dsjred;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  
+  position: fixed !important; /* this isn't working, it's being treated similar to absolute */
+  top:0;
+  left:0;
+  right: 0;
+
+  visibility: hidden;
+}
+#profile .url{
+  color: $dsjblue;
+  font-weight: bold;
+  a{
+    color: $dsjblue;
+    text-decoration: none;
+  }
+}
+#profile .gobutton{
+  margin: 30px auto;
+  border: none;
+  color: #fff;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  font-size: $font-reg;
+  background: $dsjred;
+  text-align: center;
+  display: block;
+}
+
+#profile .disabled{
+  background: $dsjgrey !important;
+}
+
+#profile .options{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0px;
+  margin: 10px;
+  font-size: 14px;
+  color: $dsjgrey;
+  li{
+    display: inline-block;
+    padding: 0px 5px;
+    border-right: 1px solid #879ecd;
+    white-space:nowrap;
+  }
+  li:first-child{
+    //padding-left: 0px;
+  }
+  li:last-child{
+      border: none;
+    }
+
+}
+
+#profile .features{
+  li{
+    div{
+      width: 20px;
+      height: 20px;
+      border-radius:50%;
+      margin: 2px;
+      display: inline-block;
+      float: left;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      font-size: $font-sm;
+      font-weight: bold;
+    }
+  }
+
+}
+
+#profile .content{
+  margin-bottom: 20px;
+}
+
+.margin{
+  margin: $topmargin $sidemargin;
+}
+.margin-bottom{
+ margin-bottom: 10px; 
+}
+
+.bottom_nav_spacer{ /* for the bottom not to get hidden by chat */
+  height: 80px;
+}
+
+.hoursoperation ul{
+  list-style: none;
+  margin: 0px;
+  padding: 5px 0px;
+}
+
+.hoursoperation ul li{
+  border-top:1px solid #ccc;
+  padding:5px 0px;
+}
+
+.hoursoperation ul li .right{
+  text-align: right;
+  float:right;
+  min-width: 50%;
+}
+
+.payment_options{  
+  div{
+    width: 34px;
+    height: 21px;
+    margin: 6px 3px 6px 0;
+    overflow: hidden;
+    text-indent: -9999px;
+    display: inline-block;
+  }
+}
+#visa{ background:url('../img/payment_options.jpg') 0 0 no-repeat;}
+#mc{ background:url('../img/payment_options.jpg') -38px 0 no-repeat;}
+#ae{ background:url('../img/payment_options.jpg') -76px 0 no-repeat;}
+#discover{ background:url('../img/payment_options.jpg') -114px 0 no-repeat;}
+#jcb{ background:url('../img/payment_options.jpg') -151px 0 no-repeat;}
+#unionpay{ background:url('../img/payment_options.jpg') -189px 0 no-repeat;}
+#dinnersclub{ background:url('../img/payment_options.jpg') 0 -26px no-repeat;}
+#cash{ background:url('../img/payment_options.jpg') -37px -26px no-repeat;}
+#debit{ background:url('../img/payment_options.jpg') -75px -26px no-repeat;}
+#cheque{ background:url('../img/payment_options.jpg') -113px -26px no-repeat;}
+#travellers_cheque{ background:url('../img/payment_options.jpg') -151px -26px no-repeat;}
+#money_order{ background:url('../img/payment_options.jpg') -189px -26px no-repeat;}
+
+
+.fade {
+  text-align: center;
+  opacity: 0;
+  /*-webkit-transition: opacity 0.4s linear;
+  -moz-transition: opacity 0.4s linear;
+  -o-transition: opacity 0.4s linear;
+  transition: opacity 0.4s linear;*/
+}
+.fade .in {
+  opacity: 1;
+}
+
+/*! 
+ * angular-loading-bar v0.3.0
+ * https://chieffancypants.github.io/angular-loading-bar
+ * Copyright (c) 2014 Wes Cruver
+ * License: MIT
+ */
+
+/* Make clicks pass-through */
+#loading-bar,
+#loading-bar-spinner {
+  pointer-events: none;
+  -webkit-pointer-events: none;
+  -webkit-transition: 350ms linear all;
+  -moz-transition: 350ms linear all;
+  -o-transition: 350ms linear all;
+  transition: 350ms linear all;
+}
+
+#loading-bar.ng-enter,
+#loading-bar.ng-leave.ng-leave-active,
+#loading-bar-spinner.ng-enter,
+#loading-bar-spinner.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+#loading-bar.ng-enter.ng-enter-active,
+#loading-bar.ng-leave,
+#loading-bar-spinner.ng-enter.ng-enter-active,
+#loading-bar-spinner.ng-leave {
+  opacity: 1;
+}
+
+#loading-bar .bar {
+  -webkit-transition: width 350ms;
+  -moz-transition: width 350ms;
+  -o-transition: width 350ms;
+  transition: width 350ms;
+
+  background: #CC092F;
+  position: fixed;
+  z-index: 2000;
+  top: 44px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+/* ----------- PLACE MAP ----------- */
+.add_fav{visibility: hidden; display: none;} /*hide the favourite link */
+
+.gm-style-iw{
+  div{
+    p{}
+  }
+}
+.map-list { 
+  height:29px; 
+  line-height:32px; 
+  overflow:hidden; 
+  img { 
+    float:left; 
+    padding-right:2px; 
+  }
+  a{
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.map-title{
+  strong{
+    a{
+      margin-left: 8px;
+      font-size: $font-reg !important;
+      line-height: 1em !important;
+    }
+  }
+}
+
+.map-list{
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 8px;
+  a{
+    display: block;
+    font-size: $font-reg !important;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+  }
+}
+
+
+/*
+  CleanSlateCSS
+  http://code.google.com/p/cleanslatecss/
+  An extreme CSS reset stylesheet, for normalising the styling of a container element and its children.
+
+  By Premasagar Rose: http://premasagar.com
+  A Dharmafly project: http://dharmafly.com
+
+  Lisensed under the MIT license:
+  http://www.opensource.org/licenses/mit-license.php
+
+  v0.9
+
+*/
+/* == BLANKET RESET RULES == */
+
+/* HTML 4.01 */
+#habla_window_div, #habla_window_div h1, #habla_window_div h2, #habla_window_div h3, #habla_window_div h4, #habla_window_div h5, #habla_window_div h6, #habla_window_div p, #habla_window_div td, #habla_window_div dl, #habla_window_div tr, #habla_window_div dt, #habla_window_div ol, #habla_window_div form, #habla_window_div select, #habla_window_div option, #habla_window_div pre, #habla_window_div div, #habla_window_div table,  #habla_window_div th, #habla_window_div tbody, #habla_window_div tfoot, #habla_window_div caption, #habla_window_div thead, #habla_window_div ul, #habla_window_div li, #habla_window_div address, #habla_window_div blockquote, #habla_window_div dd, #habla_window_div fieldset, #habla_window_div li, #habla_window_div iframe, #habla_window_div strong, #habla_window_div legend, #habla_window_div em, #habla_window_div s, #habla_window_div cite, #habla_window_div span, #habla_window_div input, #habla_window_div sup, #habla_window_div label, #habla_window_div dfn, #habla_window_div object, #habla_window_div big, #habla_window_div q, #habla_window_div font, #habla_window_div samp, #habla_window_div acronym, #habla_window_div small, #habla_window_div img, #habla_window_div strike, #habla_window_div code, #habla_window_div sub, #habla_window_div ins, #habla_window_div textarea, #habla_window_div var, #habla_window_div a, #habla_window_div abbr, #habla_window_div applet, #habla_window_div del, #habla_window_div kbd, #habla_window_div tt, #habla_window_div b, #habla_window_div i, #habla_window_div hr,
+
+/* HTML5 */
+#habla_window_div article, #habla_window_div aside, #habla_window_div dialog, #habla_window_div figure, #habla_window_div footer, #habla_window_div header, #habla_window_div hgroup, #habla_window_div menu, #habla_window_div nav, #habla_window_div section, #habla_window_div time, #habla_window_div mark, #habla_window_div audio, #habla_window_div video {
+    background-attachment:scroll;
+    background-color:transparent;
+    background-image:none; /* This rule affects the use of pngfix JavaScript http://dillerdesign.com/experiment/DD_BelatedPNG for IE6, which is used to force the browser to recognise alpha-transparent PNGs files that replace the IE6 lack of PNG transparency. (The rule overrides the VML image that is used to replace the given CSS background-image). If you don't know what that means, then you probably haven't used the pngfix script, and this comment may be ignored :) */
+    background-position:0 0;
+    background-repeat:repeat;
+    border-color:black; /* because border-color should match font color, so it is impossible for the reset stylesheet to know what color it should be. Guideline: if you haven't already declared a border-color for an element, be sure to do so when you first declare the border-width */
+    border-style:none;
+    border-width:medium;
+/* Breaks IE 7 and 8 in quirks mode*/
+/*  bottom:auto;*/
+    clear:none;
+    clip:auto;
+    color:inherit;
+/*  breaks opera*/
+/*  content:normal;*/
+    counter-increment:none;
+    counter-reset:none;
+    cursor:auto;
+    direction:inherit;
+    display:inline;
+    float:none;
+    font-family: inherit; /* As with other inherit values, this needs to be set on the root container element */
+    font-size: inherit;
+    font-style:inherit;
+    font-variant:normal;
+    font-weight:inherit;
+    height:auto;
+/*  left:auto;*/
+    letter-spacing:normal;
+    line-height:inherit;
+    list-style-type: inherit; /* Could set list-style-type to none */
+    list-style-position: inside;
+    list-style-image: none;
+    margin:0;
+    max-height:none;
+    max-width:none;
+/*  breaks ie7*/
+    /*min-height:0;
+       min-width:0;*/
+    outline:invert none medium;
+    overflow:visible;
+    padding:0;
+    position:static;
+    quotes: "" "";
+/*  breaks ie7*/
+/*  right:auto;*/
+    table-layout:auto;
+    text-align:inherit;
+    text-decoration:inherit;
+/*Doesn't indent in IE quirks*/
+/*  text-indent:0;*/
+    text-transform:none;
+/*Breaks scrolling in ie quirks mode*/
+/*  top:auto;*/
+    unicode-bidi:normal;
+    vertical-align:baseline;
+    visibility:visible;
+    white-space:normal;
+    width:auto;
+    word-spacing:normal;
+    z-index:auto;
+    
+    /* CSS3 and proprietary */
+    /* This section needs extendin */
+    border-radius:0;
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
+    opacity:1;
+}
+
+/* == BLOCK-LEVEL == */
+/* Actually, some of these should be inline-block and other values, but block is fine */
+/* HTML 4.01 */
+#habla_window_div, #habla_window_div th, #habla_window_div table, #habla_window_div h3, #habla_window_div h5, #habla_window_div p, #habla_window_div h1, #habla_window_div td, #habla_window_div dl, #habla_window_div tr, #habla_window_div dt, #habla_window_div h6, #habla_window_div ol, #habla_window_div form, #habla_window_div select, #habla_window_div option, #habla_window_div pre, #habla_window_div div, #habla_window_div tbody, #habla_window_div h2, #habla_window_div tfoot, #habla_window_div caption, #habla_window_div thead, #habla_window_div h4, #habla_window_div ul, #habla_window_div address, #habla_window_div blockquote, #habla_window_div dd, #habla_window_div fieldset, #habla_window_div textarea, #habla_window_div hr,
+/* HTML5 new elements */
+#habla_window_div article, #habla_window_div aside, #habla_window_div dialog, #habla_window_div figure, #habla_window_div footer, #habla_window_div header, #habla_window_div hgroup, #habla_window_div menu, #habla_window_div nav, #habla_window_div section {
+    display:block; 
+}
+/* == SPECIFIC ELEMENTS == */
+/* Some of these are browser defaults; some are just useful resets */
+
+#habla_window_div nav ul, #habla_window_div nav ol {
+    list-style-type:none;
+}
+#habla_window_div ul, #habla_window_div menu {
+    list-style-type:disc;
+}
+#habla_window_div ol {
+    list-style-type:decimal;
+}
+#habla_window_div ol ul, #habla_window_div ul ul, #habla_window_div menu ul, #habla_window_div ol menu, #habla_window_div ul menu, #habla_window_div menu menu {
+    list-style-type:circle;
+}
+#habla_window_div ol ol ul, #habla_window_div ol ul ul, #habla_window_div ol menu ul, #habla_window_div ol ol menu, #habla_window_div ol ul menu, #habla_window_div ol menu menu, #habla_window_div ul ol ul, #habla_window_div ul ul ul, #habla_window_div ul menu ul, #habla_window_div ul ol menu, #habla_window_div ul ul menu, #habla_window_div ul menu menu, #habla_window_div menu ol ul, #habla_window_div menu ul ul, #habla_window_div menu menu ul, #habla_window_div menu ol menu, #habla_window_div menu ul menu, #habla_window_div menu menu menu {
+    list-style-type:square;
+}
+#habla_window_div li {  
+    display:list-item;
+    /* Fixes IE7 issue with positioning of nested bullets */
+    min-height:auto;
+    min-width:auto;
+}
+#habla_window_div strong {
+    font-weight:bold;
+}
+#habla_window_div em {
+    font-style:italic;
+}
+#habla_window_div kbd, #habla_window_div samp, #habla_window_div code {
+  font-family:monospace;
+}
+#habla_window_div a, #habla_window_div a *, #habla_window_div input[type=submit], #habla_window_div input[type=radio], #habla_window_div input[type=checkbox], #habla_window_div select {
+    cursor:pointer;
+}
+#habla_window_div a:hover {
+    text-decoration:underline;
+}
+#habla_window_div button, #habla_window_div input[type=submit] {
+  text-align: center;
+}
+#habla_window_div input[type=hidden] {
+    display:none;
+}
+#habla_window_div abbr[title], #habla_window_div acronym[title], #habla_window_div dfn[title] {
+    cursor:help;
+    border-bottom-width:1px;
+    border-bottom-style:dotted;
+}
+#habla_window_div ins {
+    background-color:#ff9;
+    color:black;
+}
+#habla_window_div del {
+    text-decoration: line-through;
+}
+#habla_window_div blockquote, #habla_window_div q  {
+    quotes:none; /* HTML5 */
+}
+#habla_window_div blockquote:before, #habla_window_div blockquote:after, #habla_window_div q:before, #habla_window_div q:after, #habla_window_div li:before, #habla_window_div li:after  {
+    content: "";
+    content:none; /* HTML5 */
+}
+#habla_window_div input, #habla_window_div select {
+    vertical-align:middle;
+}
+#habla_window_div select, #habla_window_div textarea, #habla_window_div input {
+    border:1px solid #ccc;
+}
+#habla_window_div table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+#habla_window_div hr {
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #ccc;
+    margin:1em 0;
+}
+#habla_window_div *[dir=rtl] {
+    direction: rtl;
+}
+#habla_window_div mark {
+    background-color:#ff9;
+    color:black;
+    font-style:italic;
+    font-weight:bold;
+}
+
+
+
+/* == ROOT CONTAINER ELEMENT == */
+/* This contains default values for child elements to inherit  */
+#habla_window_div {
+    font-size: 100%; /* To restrict to a pixel unit, use 12px */
+    line-height: 1;
+    direction:ltr;
+    text-align:left;
+    font-family: "Times New Roman", Times, serif; /* Override this with whatever font-family is required */
+    color: black;
+    font-style:normal;
+    font-weight:normal;
+    text-decoration:none;
+}/*Layout Elements */
+
+#habla_window_div.habla_window_div_base {
+    display:block !important;
+    z-index:99999999;
+}
+
+#habla_window_div #olark-callout-bubble-offline, #habla_window_div #olark-callout-bubble-online{
+    position: relative !important;
+}
+
+#habla_window_div #olark-callout-bubble, #habla_window_div #olark-callout-bubble-offline {
+    position: relative !important;
+}
+
+#habla_window_div #habla_panel_div{
+    overflow: hidden;
+}
+
+#habla_window_div #habla_middle_div{
+    
+        padding: 6px 10px 3px 10px;
+    
+}
+
+/*IE7 Fix*/
+*:first-child+html #habla_window_div #habla_middle_div{
+    padding: 6px 0 0 0;
+}
+
+#habla_window_div textarea{
+    max-width: 100%;
+    width: 100%;
+    
+}
+
+/*IE7 Fix*/
+*:first-child+html #habla_window_div textarea{
+    width: 97%;
+}
+    
+    /*Chatting*/
+    
+    #habla_window_div #habla_input_div{
+        margin-left: -17px;   
+        margin-right: -5px;
+    }
+    
+    /*IE7 Fix*/
+    *:first-child+html #habla_window_div #habla_input_div{
+        margin-left: 0px; 
+        margin-right: 0px; 
+        width: 95%;
+    }
+    
+    #habla_window_div #habla_chatform_form{
+        padding: 3px 10px 0 10px;
+    }
+    
+    #habla_window_div #habla_conversation_div{
+        padding: 6px 10px 0 10px;
+        
+            margin: -6px -10px 0 -10px;
+        
+    }
+    
+    /*IE7 Fix*/
+    *:first-child+html #habla_window_div #habla_conversation_div, *:first-child+html #habla_window_div #habla_pre_chat_div, *:first-child+html #habla_window_div #habla_offline_message_div{
+        width: 97%;
+    }
+    
+    /*Forms: Prechat and Offline*/
+    
+    #habla_window_div #habla_name_input, #habla_window_div #habla_offline_email_input, #habla_window_div #habla_offline_body_input, #habla_window_div #habla_pre_chat_name_input, #habla_window_div #habla_pre_chat_email_input{
+        overflow: hidden;
+    }
+    
+    #habla_window_div #habla_pre_chat_div, #habla_window_div #habla_offline_message_sent_div, #habla_window_div #habla_offline_message_div{
+        /*offset any horizontal padding and borders on input elements*/
+        padding: 0px 10px 0px 10px;
+        margin-left: -10px;
+    } 
+    
+    /*IE7 Fix*/
+    *:first-child+html #habla_window_div #habla_pre_chat_div, *:first-child+html #habla_window_div #habla_offline_message_sent_div, *:first-child+html #habla_window_div #habla_offline_message_div{
+        padding: 5px;
+        margin-left: 0px;
+    }
+    
+
+/* General Text Style */
+
+#habla_window_div{
+    font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    font-size:14px;
+}
+
+#habla_middle_div{
+    line-height:1.5em;
+}
+
+/* Colors, borders, backgrounds, and general styles */
+
+    /*Background*/
+    #habla_window_div #habla_expanded_div {
+        border-left: 1px solid #ededed;
+        border-right: 1px solid #ededed;
+    }
+    
+    /*Corners and rounding*/
+
+    #habla_window_div.habla_window_div_position_inline .habla_panel_border{
+        border-bottom: 1px solid #ededed;
+    }
+
+    #habla_window_div.olrk-fixed-bottom .habla_panel_border, #habla_window_div.olrk-fixed-bottom #habla_topbar_div{
+        -moz-border-radius-topleft:5px;
+        -moz-border-radius-topright:5px; 
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    
+    #habla_window_div.olrk-fixed-top .habla_panel_border{
+        -moz-border-radius-bottomleft:5px;
+        -moz-border-radius-bottomright:5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    
+    #habla_window_div.olrk-fixed-top #habla_expanded_div {
+        border-bottom: 1px solid #ededed;
+    }
+    
+    /*Chatting*/
+    
+    #habla_window_div .habla_conversation_div {
+        background:transparent none repeat scroll 0 0;
+        border-bottom:1px dotted #ededed;
+        line-height:1.5em;
+        overflow:auto;
+        color: black;
+        width: 100%;
+    }
+
+    #habla_window_div #habla_wcsend_input{
+        background:transparent none repeat scroll 0 0;
+        overflow:auto;
+        padding: 5px;
+        vertical-align: text-top;
+        line-height:1.5em;
+    }
+
+    #habla_window_div .habla_wcsend_input_normal {
+        border:1px solid #b6b6b6;
+        color: black;
+    }
+    #habla_window_div .habla_wcsend_input_pre {
+        color: gray;
+    }
+    
+    #habla_window_div .habla_wcsend_input_highlighted{
+        border-color: gray !important;
+        color: black;
+    }
+    
+    #habla_window_div .habla_conversation_p_item {
+        background:transparent none repeat scroll 0 0;
+        color: black;
+        padding: 0;
+        margin: 0 0 0 20px;
+        text-indent: -20px;
+        overflow: visible;
+    }
+
+    #habla_window_div .habla_conversation_person1 {
+        color: #979797;
+        padding-right:5px;
+        display: inline;
+    }
+    #habla_window_div .habla_conversation_person2 {
+        color: $dsjred;
+        padding-right:5px;
+    }
+    
+    #habla_window_div .olrk_avatar{ 
+        float: right;
+        border: 1px solid lightgray;
+        margin-left: 5px;
+        margin-bottom: 5px;
+    }
+
+    /*Prechat and Offline Styles*/
+
+    #habla_window_div #habla_offline_message_span, #habla_window_div #habla_pre_chat_span{
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    #habla_window_div #habla_offline_message_div, #habla_window_div #habla_pre_chat_div {
+        line-height:1.5em;
+    }
+    #habla_window_div #habla_offline_message_span{
+        margin-bottom: 5px;
+        display: block;
+    }
+    #habla_window_div #habla_name_input, #habla_window_div #habla_offline_email_input, #habla_window_div #habla_offline_body_input, #habla_window_div #habla_pre_chat_name_input, #habla_window_div #habla_pre_chat_email_input{
+        border: 1px solid #e4e4e4;
+        padding: 4px;
+        margin-bottom: 5px;
+        font-size: .9em;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+    }
+
+    #habla_window_div .habla_offline_submit_input {
+        background: #d54f27 none repeat scroll 0 0;
+        border:medium none #ededed;
+        color: white;
+        float:right;
+        cursor: pointer;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        padding: 1px 6px 1px 6px;
+        margin: -10px -10px 0 0;
+    }
+    
+    #habla_window_div .habla_offline_error_span, #habla_window_div #habla_pre_chat_error_span{
+        margin-top: -20px; 
+        float:left;
+        padding-bottom: 10px;
+        font-style: italic;
+        line-height:1.5em;
+    }
+
+    /*Topbar*/
+
+    #habla_window_div #habla_topbar_div{
+        background: $dsjred none repeat scroll 0 0;
+        color:#FFFFFF;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #habla_window_div #habla_oplink_a{
+        color: white;
+        text-decoration:none;
+    }
+
+    #habla_window_div #habla_oplink_a.habla_oplink_a_hover{
+        text-decoration:underline;
+    }
+
+    #habla_window_div .clear_style {
+        clear:both;
+    }
+
+    /* Topbar Buttons */
+
+    #habla_window_div .habla_button {
+        float: right;
+        margin-top: -1px;
+        margin-left: 4px;
+        padding: 0px;
+        width: 16px;
+        height: 16px;
+        border-radius: 5px !important;
+        -moz-border-radius: 5px !important;
+        -webkit-border-radius: 5px !important;
+        background-position: 0 top;
+        background-repeat: no-repeat !important;
+        cursor: pointer !important;
+    
+        /*Hide the Ascii buttons*/
+        overflow: hidden;
+        line-height: 1000px;
+    
+        
+            background-image: url(/themes/azul/buttons-light.png);
+        
+    
+    }
+
+    #habla_window_div .habla_button:hover {
+        background-color: #333;
+    }
+
+    #habla_window_div #habla_sizebutton_a {
+        background-position: -80px top !important;
+    }
+
+    .olrk-state-expanded #habla_window_div #habla_sizebutton_a {
+        background-position: -96px top !important;
+    }
+
+    #habla_window_div #habla_sizebutton_a:hover {
+        background-color: #333;
+    }
+
+    #habla_window_div #habla_closebutton_a {
+        background-position: 0px top !important;
+    }
+
+    #habla_window_div #habla_closebutton_a:hover {
+        background-color: #333;
+    }
+
+    #habla_window_div #habla_popout_a {
+        background-position: -16px top !important;
+    }
+
+    #habla_window_div #habla_popout_a:hover {
+        background-color: #333;
+    }
+
+/* preserve link coloring */
+#habla_window_div #habla_panel_div #habla_expanded_div a,
+#habla_window_div #habla_panel_div #habla_conversation_div a {
+    color: #246092;
+}
+#habla_window_div #habla_panel_div #habla_expanded_div a:visited,
+#habla_window_div #habla_panel_div #habla_conversation_div a:visited {
+    color: #246092;
+}
+#habla_window_div #habla_panel_div #habla_expanded_div a:active,
+#habla_window_div #habla_panel_div #habla_conversation_div a:active {
+    color: #246092;
+}
+
+/*Animations*/
+
+@-webkit-keyframes pulse {
+    0% {
+    }
+    50% {
+        background-color:rgba(255,0,0,0.7); 
+    }
+    100% {
+    }
+}
+
+@-webkit-keyframes tab_in_bottom {
+    0% {
+        margin-bottom: -50px;
+        padding-bottom: 10px;
+    }
+    50% {
+        margin-bottom: 0px;
+        padding-bottom: 15px;
+    }
+    100% {
+        padding-bottom: 10px;
+    }
+}
+
+@-webkit-keyframes tab_in_top {
+    0% {
+        margin-top: -50px;
+        padding-top: 10px;
+    }
+    50% {
+        margin-top: 0px;
+        padding-top: 15px;
+    }
+    100% {
+        padding-top: 10px;
+    }
+}
+
+.olrk-state-compressed .olrk-fixed-bottom  #habla_topbar_div{
+    -webkit-animation-name: tab_in_bottom;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;    
+}
+
+.olrk-state-compressed .olrk-fixed-top  #habla_topbar_div{
+    -webkit-animation-name: tab_in_top;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;    
+}
+
+#habla_window_div .habla_topbar_div_highlighted {
+background: #d05c34 none repeat scroll 0 0;
+color:#FFFFFF;
+    -webkit-animation-name: pulse;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: 2;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+/*Quirksmode IE fixes*/
+
+
+
+
+
+
+
+
+a.hbl_pal_title_fg {
+    color:  !important;
+}
+
+.hbl_pal_main_bg{ 
+  background-color:white !important;
+  }
+  .hbl_pal_title_fg{ 
+  color: !important;
+  }
+  .hbl_pal_local_fg{ 
+  color: !important;
+  }
+  .hbl_pal_title_bg{ 
+  background-color: !important;
+  }
+  .hbl_pal_offline_submit_fg{ 
+  color: !important;
+  }
+  .hbl_pal_remote_fg{ 
+  color: !important;
+  }
+  .hbl_pal_offline_submit_bg{ 
+  background-color: !important;
+  }
+  
+
+
+div.hbl_pal_main_height{ 
+  height: 250px !important;
+  }
+  div.hbl_pal_main_width{ 
+  width: 100% !important;
+  }
+  
+
+
+/*Make position:fixed work in IE6!*/
+
+.olrk-fixed-top    /* position fixed Top    */{position:fixed;bottom:auto;top:0px;}
+.olrk-fixed-bottom /* position fixed Bottom */{position:fixed;bottom:0px;top:auto;}
+.olrk-fixed-left   /* position fixed Left   */{position:fixed;right:auto;left:0px;}
+.olrk-fixed-right  /* position fixed right  */{position:fixed;right:0px;left:auto;}
+
+
+
+/* backwards compat */
+.habla_window_div_position {
+bottom:0px;
+position: fixed;
+right:0px;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+.habla_window_div_position_inline {
+}
+.habla_window_div_position_floating {
+bottom:0px;
+position: fixed;
+right:0px;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+.habla_window_div_position_floating_ie {
+bottom:0px;
+position: absolute;
+right:0px;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+
+/* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = /!\  D E V E L O P M E N T   S P E C I F I C   /!\  */
+
+.badlink{ /* for bad links i shouldn't current click */
+  text-decoration: line-through !important;
+} 

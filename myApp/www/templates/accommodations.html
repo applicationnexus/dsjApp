@@ -1,0 +1,85 @@
+<ion-view has-header="false" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+
+    <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon hide"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+    </div>
+
+    <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+    <a class="button button-icon icon ion-navigate hide"></a>
+    <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble">chat</a>
+    </div>
+
+  <ion-content padding="false" has-header="false" id="accommodations">
+  <h1 class="main">{{"places.accommodations_title" | t}}</h1>
+  <h3>{{"places.accommodations_bookroom" | t}}</h3>
+
+<div id="jrs_calendar_form" data-ng-controller="accomCtrl">
+  <div id="confirmation" class="hide" style="border: 1px solid #002878; box-shadow: 5px 5px 5px #888888; width: 95%; position: absolute; left:0; right:0; margin-left: auto; margin-right:auto; text-align:center; background: #fff; padding: 20px 5px 0px 5px;">
+    <span data-ng-if="language == 'en'">You will be redirected to an external website.</span>
+    <span data-ng-if="language == 'fr'">Vous allez être redirigé vers un site externe.</span>
+    <div>
+      <button class="gobutton" style="display:inline-block; margin-right:10px; min-width:35%; max-width:45%;" data-ng-click="submitJack('cancel');">
+        <span data-ng-if="language == 'en'" style="white-space:nowrap;">Cancel</span>
+        <span data-ng-if="language == 'fr'" style="white-space:nowrap;">Annuler</span>
+      </button>
+      <button class="gobutton" style="display:inline-block; margin-left:10px; min-width:35%; max-width:45%;" data-ng-click="submitJack('ok');">
+        <span data-ng-if="language == 'en'">Ok</span>
+        <span data-ng-if="language == 'fr'">Oui</span>      
+      </button>
+    </div>
+  </div>
+
+    <form action="http://discoversaintjohn.canada-booknow.com/redirect_booking.php" method="get" id="widget_booking_form" name="widget_booking_form" enctype="multipart/form-data" target="_blank"> 
+    
+    <input type="hidden" name="campaign" id="campaign" value="discoversaintjohn-mobile_{{language}} (custom)" />
+    <input type="hidden" name="cloneID" id="cloneID" value="1394" />
+    <input type="hidden" name="group_id" id="group_id" value="7323" />
+    <input type="hidden" name="widget_id" id="widget_id" value="538" />
+    <input type="hidden" name="rooms" value="1" />
+
+    <!--// these inputs are dynamic //-->
+    <input type="hidden" name="language" id="language" value="{{language}}">
+    <input type="hidden" name="nights" id="nights" value="{{processed_nights}}" />
+    <input type="hidden" name="sDay" id="sDay" value="{{processed_start_day}}" />
+    <input type="hidden" name="sMonth" id="sMonth" value="{{processed_start_month}}" />
+    <input type="hidden" name="sYear" id="sYear" value="{{processed_start_year}}" />    
+
+    <!-- Check-In Date -->
+    <div id="jrs_arrival_input">
+        <div class="jrs_form_text">{{"places.accommodations_checkin" | t}}:</div>
+        <div class="jrdp_calendar_pos" id="start-jrdatepicker"></div>
+        <input type="date" name="start-date-picker" id="start-date" class="date-pick" placeholder="{{processed_start_date}}" data-ng-model="start_date" ng-change="datechange()"/>
+        <input type="hidden" name="start-date" value="{{processed_start_date}}">
+        <img class="ui-datepicker-trigger" src="http://s3.amazonaws.com/bookdirect_template_assets/widget_538/assets/cal.png" ng-click="open($event)"/>
+    </div>
+
+    <!-- Check-Out Date -->
+    <div id="jrs_departure_input">
+        <div class="jrs_form_text">{{"places.accommodations_checkout" | t}}:</div>
+        <div class="jrdp_calendar_pos" id="end-jrdatepicker"></div>
+        <input type="date" name="end-date-picker" id="end-date" class="date-pick" placeholder="{{processed_end_date}}" data-ng-model="end_date" ng-change="datechange()"/>
+        <input type="hidden" name="end-date" value="{{processed_end_date}}">
+        <img class="ui-datepicker-trigger" src="http://s3.amazonaws.com/bookdirect_template_assets/widget_538/assets/cal.png" ng-click="open($event)"/>
+    </div>
+    
+    <div id="jrs_lodging_select_div">
+    <div class="jrs_form_text">{{"places.accommodations_type" | t}}:</div>
+        <select id="lodgingID" name="lodgingID" class="jrs_form_select_item">
+            <option value="103" selected="selected">{{"places.accommodations_lodging" | t}}</option>  
+            <option value="203">{{"places.accommodations_hotel" | t}}</option> 
+            <option value="210">{{"places.accommodations_inn" | t}}</option>  
+            <option value="21">{{"places.accommodations_bb" | t}}</option> 
+            <option value="248">{{"places.accommodations_hunting" | t}}</option> 
+            <option value="249">{{"places.accommodations_cottage" | t}}</option>         
+        </select>        
+    </div>
+    </form>
+    <div id="jrs_search_submit">
+        <button class="gobutton" data-ng-click="submitJack('search');">{{"search" | t}}</button>
+    </div> 
+</div>
+  <div class="bottom_nav_spacer"></div>
+  </ion-content>
+</ion-view>

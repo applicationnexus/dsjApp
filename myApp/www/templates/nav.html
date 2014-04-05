@@ -1,0 +1,54 @@
+ <script id="modal-play.html" type="text/ng-template">
+    <div class="modal" style="background: #000;">
+        <header class="bar bar-header bar-positive" style="background: #000; border: none;">
+            <h1 class="title" style="text-transform: uppercase;"></h1>
+            <button class="button button-clear button-negative ion-chevron-down" ng-click="closeModal()"> {{"nav.close" | t}}</button>
+        </header>
+        <ion-content has-header="true">
+            <youtube data-ng-if="language"></youtube>
+        </ion-content>
+    </div>
+ </script>
+
+ <ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="true" module="uiI18n" ui-i18n="language">
+  <ion-content>
+  <div ng-controller="loadDataCtrl">
+  </div>
+  <div class="containeraspect">
+    <div class="toplink"><a ng-click="changeLanguage()" class="french_site">{{"nav.french_site" | t}}</a></div>
+    <div class="dsjlogo-lg">Discover Saint John</div>
+    <div data-ng-if="language == 'en'" class="dsjlogo-tagline"></div>
+    <div data-ng-if="language == 'fr'" class="dsjlogo-tagline_fr"></div>
+
+    <p style="text-align:center;">
+        <ul class="navgrid">
+            <li class="todo"><a href="#/thingstodo">{{"nav.thingstodo" | t}}</a></li>
+            <li class="dining"><a href="#/dining">{{"nav.dining" | t}}</a></li>
+            <li class="shopping"><a href="#/shopping">{{"nav.shopping" | t}}</a></li>
+            <li class="stay"><a href="#/accommodations">{{"nav.accommodations" | t}}</a></li>
+            <li class="play" data-ng-controller="play"><a ng-click="openModal()">{{"nav.play" | t}}</a></li>
+            <li class="events"><a href="#/events">{{"nav.events" | t}}</a></li>
+            <li class="visiting"><a href="#/visiting">{{"nav.visiting" | t}}</a></li>
+            <li class="map"><a href="#/map">{{"nav.map" | t}}</a></li>
+            <li id="olarkchatmain" class="chat" data-ng-if="language != 'fr'"><a onclick="olark('api.box.expand'); return false">chat</a></li>
+            <div class="clear"></div>
+        </ul>
+
+        <ul class="navfooter">
+            <li class="full_site">
+              <a data-ng-if="language == 'en'" href="http://discoversaintjohn.com/?ref=mobile_nav">Full Site</a>
+              <a data-ng-if="language == 'fr'" href="http://discoversaintjohn.com/fr/?ref=mobile_nav">Site Complet</a>
+            </li>
+            <li class="twitter"><a href="http://twitter.com/visitsaintjohn" target="_blank">twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/DiscoverSaintJohn" target="_blank">facebook</a></li>
+            <li class="city_news">
+              <a href="http://www.saintjohn.ca/en/home/news/newsreleases/default.aspx" target="_blank" data-ng-if="language == 'en'">City News</a>
+              <a href="http://www.saintjohn.ca/fr/accueil/salledepresse/newsreleases/default.aspx" target="_blank" data-ng-if="language == 'fr'">Ville Nouvelles</a>
+            </li>
+            
+            <div class="clear"></div>
+        </ul>
+    </p>
+  </div>
+  </ion-content>
+</ion-view>

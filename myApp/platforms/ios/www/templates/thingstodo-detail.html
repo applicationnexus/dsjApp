@@ -1,0 +1,157 @@
+<ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+
+    <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon" onclick="window.history.back();"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+    </div>
+
+    <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+    <a class="button button-icon icon ion-navigate hide"></a>
+    <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble">chat</a>
+    </div>
+
+  <ion-content has-header="false" has-tabs="true" padding="false">
+    
+    <div data-ng-controller="ThingsToDoDataDetail">
+    
+    <div data-ng-if="place.membership_tier >= 2" style="width:10px; height:10px; display:inline-block; float:left; padding-right: 5px; color: #FFCC00;" class="margin ion-ios7-star"></div>
+    <h1 class="margin">{{place.post_title}}</h1>
+    <span class="margin url" data-ng-if="place.website"><a href="http://{{place.website | removeHttp}}" target="_blank">{{place.website | removeHttp}}</a></span>
+      
+    <ul class="margin options" data-ng-if="place.types">
+        <li ng-repeat="type in place.types" data-ng-bind-html="type.name">
+        </li>
+    </ul>
+
+    <ul class="margin features" data-ng-if="place.features">
+        <li ng-repeat="feature in place.features">
+          <div data-ng-if="feature.slug == 'gluten-free'" style="background: #FFCC00;">GF</div> 
+          <div data-ng-if="feature.slug == 'vegetarian'" style="background: green;">V</div>
+          <div data-ng-if="feature.slug == 'seafood'" style="background: blue;">S</div>
+          <div data-ng-if="feature.slug == 'local'" style="background: red;">L</div>    
+        </li>
+    </ul>
+
+    <!-- <div class="margin">
+      <span data-ng-if="star_rating">star_rating</span>
+      <span data-ng-if="place.amenities_bathroom_facilities">amenities_bathroom_facilities</span>
+      <span data-ng-if="place.amenities_beach">amenities_beach</span>
+      <span data-ng-if="place.amenities_laundry_facilities">amenities_laundry_facilities</span>
+      <span data-ng-if="place.amenities_televisions">amenities_televisions</span>
+      <span data-ng-if="place.amenaties_toilets">amenaties_toilets</span>
+      <span data-ng-if="place.amenities_parking">amenities_parking</span>
+      <span data-ng-if="place.amenities_pool">amenities_pool</span>
+      <span data-ng-if="place.amenities_wheelchair_access">amenities_wheelchair_access</span>
+      <span data-ng-if="place.amenities_other">amenities_other</span>
+      <span data-ng-if="place.dining_facilities">dining_facilities</span>
+      <div class="clear"></div>
+    </div> -->
+
+    <div data-ng-if="place.membership_tier >= 2">
+      <p class="margin content" data-ng-if="place.post_content" data-ng-bind-html="place.post_content"></p>
+    </div>
+	<div class="addFavouriteBtn" data-ng-if="favourite=='NO'" ng-click="addFav({{place.ID}});">
+    	+ Add To Favourites
+    </div>
+	<div class="removeFavouriteBtn" data-ng-if="favourite=='YES'" ng-click="removeFav({{place.ID}});">
+    - Remove Rrom Favourites
+    </div>
+    <div class="mapinlay" id="map_canvas"></div>
+    
+    <div class="margin margin-bottom">
+    <div class="mapbutton getdirections" data-ng-class="{'mapbuttonfr': language == 'fr'}"><a href="http://maps.google.com/maps?daddr={{place.latitude}},{{place.longitude}}" target="_blank">{{"places.get_directions" | t}}</a></div>
+    <div class="mapbutton explorenearby" data-ng-class="{'mapbuttonfr': language == 'fr'}"><a href="#/map/nearby/{{place.latitude}}/{{place.longitude}}">{{"places.explore_nearby" | t}}</a></div>
+    </div>
+
+    <div class="margin">
+      <span data-ng-if="place.street">{{place.street}}<br/></span>
+      <span data-ng-if="place.street2">{{ place.street2 }}<br/></span>
+      <span data-ng-if="place.city">{{place.city}},</span> <span data-ng-if="place.province">{{place.province}}</span> <span data-ng-if="place.postal_code">{{place.postal_code}}</span>
+    </div>
+
+    <div class="margin" data-ng-if="place.phone">{{"places.tel" | t}}: {{place.phone}}</div>
+    
+    <div class="margin" data-ng-if="place.toll_free_phone">{{"places.toll_free" | t}}: {{place.toll_free_phone}}</div>
+    
+    <div class="margin" data-ng-if="place.email">{{"places.email" | t}}: {{place.email}}</div>
+
+    <div class="margin" data-ng-if="(place.year_round || place.open_month)">
+      {{"places.open" | t}}:
+      <span data-ng-if="place.year_round">{{"places.year_round" | t}}</span>
+      <span data-ng-if="place.open_month">
+        <span data-ng-if="place.open_day">{{place.open_day}}</span> <span data-ng-if="place.open_month">{{ place.open_month | dateMonth }}</span> -
+        <span data-ng-if="place.close_day">{{place.close_day}}</span> <span data-ng-if="place.close_month">{{ place.close_month | dateMonth }}</span>
+      </span>
+    </div>
+
+    <div class="margin" data-ng-if="place.price">
+      {{"places.price_range" | t}}: ${{place.price}} <span data-ng-if="place.price_max">- {{place.price_max}}</span>
+    </div>
+    
+    <div class="margin payment_options" data-ng-if="(place.pay_visa || place.pay_mc || place.pay_ae || place.pay_discover || place.pay_jcb || place.pay_unionpay || place.pay_dinnersclub || place.pay_cash || place.pay_debit || place.pay_cheque || place.pay_travellers_cheque || place.pay_money_order)">
+      {{"places.accepted_payment_methods" | t}}:<br/>
+      <div data-ng-if="place.pay_visa" id="visa">VISA</div>
+      <div data-ng-if="place.pay_mc" id="mc">MC</div>
+      <div data-ng-if="place.pay_ae" id="ae">AE</div>
+      <div data-ng-if="place.pay_discover" id="discover">DISCOVER</div>
+      <div data-ng-if="place.pay_jcb" id="jcb">JCB</div>
+      <div data-ng-if="place.pay_unionpay" id="unionpay">UNIONPAY</div>
+      <div data-ng-if="place.pay_dinnersclub" id="dinnersclub">DINNERSCLUB</div>
+      <div data-ng-if="place.pay_cash" id="cash">CASH</div>
+      <div data-ng-if="place.pay_debit" id="debit">DEBIT</div>
+      <div data-ng-if="place.pay_cheque" id="cheque">CHEQUE</div>
+      <div data-ng-if="place.pay_travellers_cheque" id="travellers_cheque">TRAVELLERS</div>
+      <div data-ng-if="place.pay_money_order" id="money_order">MONEY ORDER</div>
+    </div>
+    
+    <div class="margin hoursoperation" data-ng-if="(place.monday_opening_hours != 'closed' && place.tuesday_opening_hours != 'closed' && place.wednesday_opening_hours != 'closed' && place.thursday_opening_hours != 'closed' && place.friday_opening_hours != 'closed' && place.saturday_opening_hours != 'closed' && place.sunday_opening_hours != 'closed')">
+      <ul>
+      <li>{{"places.monday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.monday_opening_hours">{{place.monday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.monday_closing_hours"> - {{place.monday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.tuesday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.tuesday_opening_hours">{{place.tuesday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.tuesday_closing_hours"> - {{place.tuesday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.wednesday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.wednesday_opening_hours">{{place.wednesday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.wednesday_closing_hours"> - {{place.wednesday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.thursday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.thursday_opening_hours">{{place.thursday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.thursday_closing_hours"> - {{place.thursday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.friday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.friday_opening_hours">{{place.friday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.friday_closing_hours"> - {{place.friday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.saturday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.saturday_opening_hours">{{place.saturday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.saturday_closing_hours"> - {{place.saturday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      <li>{{"places.sunday" | t}} 
+        <span class="right">
+        <span data-ng-if="place.sunday_opening_hours">{{place.sunday_opening_hours | hoursfilter}}</span> 
+        <span data-ng-if="place.sunday_closing_hours"> - {{place.sunday_closing_hours | hoursfilter}}</span>
+        </span>
+      </li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom_nav_spacer"></div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,24 @@
+<ion-view has-header="true" hide-nav-bar="true" has-tabs="false" padding="false" module="uiI18n" ui-i18n="language" id="profile">
+
+  <div class="bar bar-header bar-positive" style="margin-top:-45px;">
+    <button class="button icon-left ion-arrow-left-b button-clear icon hide"></button>
+    <div class="dsjlogo-sm"></div>
+    <button class="button button-clear icon ion-grid" onclick="window.location.href='#/nav'"></button>
+  </div>
+  
+  <div class="bar bar-footer bar-light chat-footer" data-ng-if="language != 'fr'">
+  <a class="button button-icon icon ion-navigate hide"></a>
+  <a onclick="olark('api.box.expand'); return false" class="button button-icon icon chatbubble">chat</a>
+  </div>
+
+  <ion-content has-header="false" has-footer="true" has-tabs="false">
+    <div>
+      <h1 class="main">{{"places.favourites_title" | t}}</h1>
+    </div>
+
+    <div style="border: 1px solid transparent;">
+    </div>
+
+  <div class="bottom_nav_spacer"></div>    
+  </ion-content>
+</ion-view>
